@@ -34,9 +34,9 @@ java HelloWorld
 Se creo de forma manual porque no encontre el comando para crear archivos desde el cmd en Windows
 
 # Publicar cambios a GitHub
-.
-.
-.
+git add .
+git commit -m "Primera Practica"
+git push --set-upstream origin develop
 
 # Hacer tag practica-1
 git tag -a practica-1 -m "Primera practica de POO"
