@@ -53,6 +53,7 @@ git push origin main
 
 # Borrar branch develop
 git branch -d develop
+git push origin :develop
 .
 .
 .
