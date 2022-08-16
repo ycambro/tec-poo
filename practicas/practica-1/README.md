@@ -33,7 +33,7 @@ java HelloWorld
 # Crear archivo README.md
 Se creo de forma manual porque no encontre el comando para crear archivos desde el cmd en Windows
 
-# Publicar cambios a GitHub
+# Publicar primeros cambios a GitHub
 git add .
 git commit -m "Primera Practica"
 git push --set-upstream origin develop
@@ -45,6 +45,11 @@ git push practica-1
 # Hacer merge de branch develop en main
 git checkout main
 git merge develop
+
+# Publicar finales cambios a GitHub
+git add .
+git commit -m "Primera Practica"
+git push origin main
 
 # Borrar branch develop
 git branch -d develop
