@@ -1,2 +1,3 @@
 # tec-poo
- Private Repository for P.O.O Class
+Yurgen Isack Cambronero Mora
+2022128005
