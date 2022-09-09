@@ -1,14 +1,17 @@
 package tec.poo.tareas;
 
 public class BattleShip{
+    /* Declaración de variables */
     BattleField BattleField = new BattleField();
     int[][]board = BattleField.getBoard();
     private int ships_alive;
     
-    
+    /* Creacion vidas de los barcos */
     public BattleShip(){
         this.ships_alive = 3;
     }
+
+    /* Lector de ataque o fallo */
     public void init(int x, int y) {
         if (board [x][y] != 0){
             System.out.println("Hit!");
@@ -42,6 +45,6 @@ public class BattleShip{
         }
     }
     public int getShips(){
-        return this.ships_alive;
+        return this.ships_alive; //Lector de barcos en juego
     }
 }

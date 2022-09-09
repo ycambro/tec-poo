@@ -1,19 +1,23 @@
 package tec.poo.tareas;
-
+ 
+/*Bibliotecas */
 import java.util.Scanner;
 
+/* Clase principal */
 public class BattleShipGame {
+    /* Declaración de variables */
     static BattleShip battleShip = new BattleShip();
     public static int x;
     public static int y;
     public static int attemps;
 
+    /* Creacion del main */
     public static void main(String... args){
         while (battleShip.getShips() != 0){
             System.out.print("Enter a guess:   ");
-            Scanner scanner = new Scanner(System.in);
+            Scanner scanner = new Scanner(System.in); //Input
             String userGuess = scanner.nextLine();
-            if (userGuess.matches("A0")){
+            if (userGuess.matches("A0")){   //Traducción del input
                 x = 0;
                 y = 0;
                 battleShip.init(x, y);

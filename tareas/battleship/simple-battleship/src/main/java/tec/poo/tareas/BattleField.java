@@ -1,14 +1,16 @@
 package tec.poo.tareas;
 
 public class BattleField{
+    /* Declaración de variables */
     private int[][] board;
     private int life_ship1;
     private int life_ship2;
     private int life_ship3;
 
     public BattleField(){
+        /* Creacion del tablero */
         this.board = new int[7][7];
-        ships();
+        ships(); //Se crean los barcos y se les da vida personal
     }
 
     private void ships(){
@@ -29,9 +31,10 @@ public class BattleField{
     }
 
     public int[][] getBoard() {
-        return this.board;
+        return this.board; //Se obtiene el tablero
     }
 
+    /* Funciones encargadas de quitarle vida al barco en caso de un hit */
     public int setLife1() {
         this.life_ship1 --;
         return this.life_ship1;
