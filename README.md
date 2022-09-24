@@ -9,7 +9,8 @@
 | Práctica 1      |    10     |  N.A.           | Fabio Calderon |
 |                 |           |                 |                |
 | **Resúmenes**   |           |                 |                |
-|                 |           |                 |                |
+|   Resumen 1     |    10     |  N.A.           | Fabio Calderon |
+|   Resumen 2     |    10     |  N.A.           | Fabio Calderon |
 |                 |           |                 |                |
 | **Tareas**      |           |                 |                |
 |                 |           |                 |                |
