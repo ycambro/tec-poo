@@ -12,31 +12,43 @@ public class Simpletron
     static int memory_position;
     static Memory MemoryAccess = new Memory();
     static int[] MemoryList = new int[1000];
+    static String[] MemoryListString = new String[1000];
     static String pre_intruction;
     static int pos_act = 0;
     static String compilation_instruction;
     static Funct Functions = new Funct();
     static int contador;
+    static String word;
+    static String fin;
+    static int finInt;
 
     public static void main( String[] args )
     {
         for (int i = 0; i <= 999; i++ ) {
-            MemoryList[i] = 000+i;
+            MemoryList[i] = 000+i+1000;
+            String list_act = Integer.toString(MemoryList[i]);
+            MemoryListString[i] = list_act.substring(1, list_act.length());
         }  
 
         System.out.println("Simpletron [version 1.0.0]");
         System.out.println(" ");
 
-        while (pre_intruction != "-99999") {
-            System.out.print(MemoryList[pos_act]);
+        while (finInt != 99999) {
+            System.out.print(MemoryListString[pos_act]);
             System.out.print("> ");
 
             Scanner scanner = new Scanner(System.in); //Input
-            String word = scanner.nextLine();
+            word = scanner.nextLine();
+            fin = word.substring(1, word.length());
+            finInt = Integer.parseInt(fin);
 
-            if (word.length() == 6) {
+            if (finInt == 99999) {
+                System.out.println(word);
+                break;
+            } else if (word.length() == 6 && word != fin) {
+                System.out.println(fin);
                 MemoryAccess.instructionInMemory(pos_act, word);
-
+                pos_act ++;
             } else {
                 System.out.println("Error 01: The operation code is invalid");
             }
