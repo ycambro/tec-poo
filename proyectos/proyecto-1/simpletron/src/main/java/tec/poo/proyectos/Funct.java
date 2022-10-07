@@ -1,8 +1,5 @@
 package tec.poo.proyectos;
 
-/* Bibliotecas */
-import java.lang.Math;
-
 public class Funct {
 
     private int acumulator;
@@ -24,8 +21,7 @@ public class Funct {
             acumulator_sign = "-";
         }
         String tmp = Integer.toString(this.acumulator);
-        acumulator_sign.concat(tmp);
-        return acumulator_sign;
+        return acumulator_sign + tmp;
     }
     
     public void Sum(int value) {

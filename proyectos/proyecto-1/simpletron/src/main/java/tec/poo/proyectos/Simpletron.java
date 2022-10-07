@@ -43,10 +43,8 @@ public class Simpletron
             finInt = Integer.parseInt(fin);
 
             if (finInt == 99999) {
-                System.out.println(word);
                 break;
-            } else if (word.length() == 6 && word != fin) {
-                System.out.println(fin);
+            } else if (word.length() == 6) {
                 MemoryAccess.instructionInMemory(pos_act, word);
                 pos_act ++;
             } else {
@@ -57,8 +55,6 @@ public class Simpletron
         System.out.println(" ");
 
         while (instruction != "+44") {
-            System.out.print("Simple> ");
-
             compilation_instruction = MemoryAccess.getMemory(pos);
             instruction = compilation_instruction.substring(0,3);
             memory_pos = compilation_instruction.substring(3, compilation_instruction.length());
@@ -69,6 +65,7 @@ public class Simpletron
 
             switch(instruction) {
                 case "+10":
+                System.out.print("Simple> ");
                 Scanner num_scan = new Scanner(System.in);
                 String number = num_scan.nextLine();
                 MemoryAccess.setInMemory(memory_position, number);
@@ -76,13 +73,13 @@ public class Simpletron
                 break;
                 
                 case "+11":
+                System.out.print("Simple> ");
                 System.out.println(MemoryAccess.getMemory(memory_position));
                 pos ++;
                 break;
 
                 case "+20":
-                String word_without_sign = compilation_instruction.substring(1, compilation_instruction.length());
-                int word_int = Integer.parseInt(word_without_sign);
+                int word_int = Integer.parseInt(MemoryAccess.getMemory(memory_position));
                 Functions.setAcumulator(word_int);
                 pos ++;
                 break;
@@ -93,43 +90,37 @@ public class Simpletron
                 break;
 
                 case "+30":
-                String num_without_sign = compilation_instruction.substring(1, compilation_instruction.length());
-                int num = Integer.parseInt(num_without_sign);
+                int num = Integer.parseInt(MemoryAccess.getMemory(memory_position));
                 Functions.Sum(num);
                 pos ++;
                 break;
 
                 case "+31":
-                String numb_without_sign = compilation_instruction.substring(1, compilation_instruction.length());
-                int numb = Integer.parseInt(numb_without_sign);
+                int numb = Integer.parseInt(MemoryAccess.getMemory(memory_position));
                 Functions.Subtract(numb);
                 pos ++;
                 break;
 
                 case "+32":
-                String numr_without_sign = compilation_instruction.substring(1, compilation_instruction.length());
-                int numr = Integer.parseInt(numr_without_sign);
+                int numr = Integer.parseInt(MemoryAccess.getMemory(memory_position));
                 Functions.Multiply(numr);
                 pos ++;
                 break;
 
                 case "+33":
-                String numbr_without_sign = compilation_instruction.substring(1, compilation_instruction.length());
-                int numbr = Integer.parseInt(numbr_without_sign);
+                int numbr = Integer.parseInt(MemoryAccess.getMemory(memory_position));
                 Functions.Divide(numbr);
                 pos ++;
                 break;
 
                 case "+34":
-                String numbe_without_sign = compilation_instruction.substring(1, compilation_instruction.length());
-                int numbe = Integer.parseInt(numbe_without_sign);
+                int numbe = Integer.parseInt(MemoryAccess.getMemory(memory_position));
                 Functions.Module(numbe);
                 pos ++;
                 break;
 
                 case "+35":
-                String numbi_without_sign = compilation_instruction.substring(1, compilation_instruction.length());
-                int numbi = Integer.parseInt(numbi_without_sign);
+                int numbi = Integer.parseInt(MemoryAccess.getMemory(memory_position));
                 Functions.Exponentiation(numbi);
                 pos ++;
                 break;
@@ -148,7 +139,7 @@ public class Simpletron
                 break;
                 
                 case "+42":
-                if (Functions.getAcumulator() == "+00000") {
+                if (Functions.getAcumulator() == "+0") {
                     pos = memory_position;
                 } else {
                     pos ++;
