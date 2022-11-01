@@ -41,7 +41,6 @@ public class BattleShipPlay extends JDialog implements ActionListener{
         dialog = new JDialog(father, modal); //Se crea y se asigna su padre
         dialog.setSize(600, 600); //Se le da un tamaño
         dialog.setLayout(null); //Se limpia para no tener problemas de distribución
-        dialog.setAlwaysOnTop(true); //Siempre estará arriba
         dialog.setLocationRelativeTo(null); //Se centra
         dialog.getContentPane().setBackground(Color.CYAN); //Se le pone color Cyan al fondo
 

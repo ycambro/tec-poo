@@ -75,7 +75,7 @@ public class BattleShipUI extends JFrame implements ActionListener{
 
         neu = new JMenuItem("Nuevo");
         load = new JMenuItem("Cargar");
-        exit = new JMenuItem("exit");
+        exit = new JMenuItem("Salir");
 
         game.add(neu);
         neu.addActionListener(this);
@@ -166,7 +166,7 @@ public class BattleShipUI extends JFrame implements ActionListener{
             }
         } else if (e.getSource() == neu) {
             if (path == null) {
-                JOptionPane.showMessageDialog(this, "Selecciona primero una ruta de guardado!");
+                JOptionPane.showMessageDialog(this, "Selecciona primero una ruta de guardado! /r");
             } else {
                 gameStart = new BattleShipPlay(this, true, field, path);
                 field = new BattleField();
