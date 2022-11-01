@@ -17,7 +17,7 @@ public class BattleShipPlay extends JDialog implements ActionListener{
     int[][]board;
     int x;
     int y;
-    private int ships_alive;
+    int ships_alive;
     int attemps;
     JsonSL saver;
     String path;
@@ -27,8 +27,8 @@ public class BattleShipPlay extends JDialog implements ActionListener{
     public BattleShipPlay(BattleShipUI father, boolean modal, BattleField board1, String pathO) {
         path = pathO; //Se guarda el path para usarse luego
         try {
-            this.ships_alive = 3; //Se crean los barcos
             Battlefield = board1; //Se pasa el objeto battlefield a valor global 
+            ships_alive = Battlefield.getShipsAlive(); //Se crean los barcos
             attemps = Battlefield.getAttemps(); //Se inician los intentos
             board = Battlefield.getBoard(); //Se obtiene la matriz
         } catch (NullPointerException ex) {
@@ -322,7 +322,7 @@ public class BattleShipPlay extends JDialog implements ActionListener{
                         board[x][y] = 5; //Se cambia el valor a 5 para efectos del guardado
                         if (life1 == 0){
                             text.setText("Se hundió Cabista"); //Se imprime en la miniconsola que se hundió el barco
-                            ships_alive --; //Se resta 1 a los barcos vivos
+                            Battlefield.setShipsAlive(); //Se resta 1 a los barcos vivos
                         }
                     }
                     if (board[x][y] == 2) {  //Si el barco era 2, se le resta la vida a el
@@ -330,7 +330,7 @@ public class BattleShipPlay extends JDialog implements ActionListener{
                         board[x][y] = 5; //Se cambia el valor a 5 para efectos del guardado
                         if (life2 == 0){
                             text.setText("Se hundió Poniez"); //Si se derriba el barco se imprime que se hundió
-                            ships_alive --;
+                            Battlefield.setShipsAlive();
                         }
                     }
                     if (board[x][y] == 3){ //Si el barco es 3, se le resta la vida
@@ -338,7 +338,7 @@ public class BattleShipPlay extends JDialog implements ActionListener{
                         board[x][y] = 5; //Se cambia el valor a 5 para efectos del guardado
                         if (life3 == 0){
                             text.setText("Se hundió Hacqi"); //Si se derriba el barco se imprime que se hundió
-                            ships_alive --;
+                            Battlefield.setShipsAlive();
                         }
                     }
                 } else {
@@ -347,7 +347,7 @@ public class BattleShipPlay extends JDialog implements ActionListener{
                     buttons[i].setBackground(Color.RED); //Se cambia el color del boton a rojo indicando que fallo
                 }
                 Battlefield.setAttemps(); //Se añade 1 a intentos
-                if (ships_alive == 0){ //Si se derribaron todos los barcos, se imprime la ventana en un popup y se cierra luego la ventana
+                if (Battlefield.getShipsAlive() == 0){ //Si se derribaron todos los barcos, se imprime la ventana en un popup y se cierra luego la ventana
                     JOptionPane.showMessageDialog(dialog, "Todos los barcos se han hundido!\n Has hecho "+ Battlefield.getAttemps() + " intentos");
                     dialog.dispose();
                 }

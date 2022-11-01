@@ -7,6 +7,7 @@ public class BattleField{
     private int life_ship2;
     private int life_ship3;
     private int attemps = 0;
+    private int ships_alive = 3;
 
     public BattleField(){
         /* Creacion del tablero */
@@ -54,6 +55,12 @@ public class BattleField{
     }
     public int getAttemps() {
         return this.attemps;
+    }
+    public int getShipsAlive() {
+        return this.ships_alive;
+    }
+    public int setShipsAlive() {
+        return this.ships_alive --;
     }
 
 }

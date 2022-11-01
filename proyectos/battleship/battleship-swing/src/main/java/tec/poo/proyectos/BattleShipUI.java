@@ -29,6 +29,7 @@ public class BattleShipUI extends JFrame implements ActionListener{
     JLabel label2;
     JsonSL saver;
     String path;
+    String oldPath;
     BattleField gameLoad;
     BattleShipPlay gameStart;
     BattleShipPlay gameLoaded;
@@ -146,6 +147,7 @@ public class BattleShipUI extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog(this ,"El archivo cargado estaba vacio!");
                     nopath = 1; //Si es asi se envia una señal de no seguir
                 } else { //Sino, se guarda el path y se da una señal de continuar
+                    oldPath = path;
                     path = fileChooser.getSelectedFile().getAbsolutePath();
                     nopath = 0;
                 }
@@ -155,6 +157,7 @@ public class BattleShipUI extends JFrame implements ActionListener{
             }
             if (nopath != 1) { //Si la señal recibida es de continuar (0) entonces, se almacena el guardado
                 gameLoad = saver.loadField(path);
+                path = oldPath;
                 if (gameLoad == null) { //Si esta vacio, pues no se carga
                     JOptionPane.showMessageDialog(this, "El archivo cargado no es permitido!");
                 } else {

@@ -21,7 +21,6 @@ public class JsonSL {
         Gson gsonToSave = new Gson();
         String jsonString = gsonToSave.toJson(board);
         UUID id = UUID.randomUUID();
-        System.out.println(jsonString);
 
         try(PrintWriter printerWriter = new PrintWriter(new File(path + "\\" + id +".json"))){
             printerWriter.write(jsonString);
