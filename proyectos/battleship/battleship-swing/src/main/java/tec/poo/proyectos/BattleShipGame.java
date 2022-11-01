@@ -14,8 +14,10 @@ public class BattleShipGame {
 
     /* Creacion del main */
     public static void main(String[] args){
-        if (args[0].equals("-ui")) {
+        if (args != null && args[0].equals("-ui")) {
             String path = args[2];
+            path.replace("/", "\\");
+            path.concat("\\");
             BattleField field = battleShip.getBattleField();
             battleUI = new BattleShipUI(field, path);
     } else  {

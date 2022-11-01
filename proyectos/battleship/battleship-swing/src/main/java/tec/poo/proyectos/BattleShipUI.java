@@ -1,18 +1,19 @@
 package tec.poo.proyectos;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import com.google.gson.JsonSyntaxException;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
+
 import javax.swing.ImageIcon;
 
 public class BattleShipUI extends JFrame implements ActionListener{
     /* Declaración de variables */
-    JMenuItem salir;
+    JMenuItem exit;
     JMenuItem load;
     JMenuItem neu;
     JMenuItem us;
@@ -33,6 +34,7 @@ public class BattleShipUI extends JFrame implements ActionListener{
     BattleField gameLoad;
     BattleShipPlay gameStart;
     BattleShipPlay gameLoaded;
+    int nopath;
 
     public BattleShipUI (BattleField battle, String pathO) {
         /* Guarda las variables recibidas como variables globales*/
@@ -73,51 +75,55 @@ public class BattleShipUI extends JFrame implements ActionListener{
 
         neu = new JMenuItem("Nuevo");
         load = new JMenuItem("Cargar");
-        salir = new JMenuItem("Salir");
+        exit = new JMenuItem("exit");
 
         game.add(neu);
         neu.addActionListener(this);
         game.add(load);
         load.addActionListener(this);
-        game.add(salir);
-        salir.addActionListener(this);
+        game.add(exit);
+        exit.addActionListener(this);
 
-        window.getContentPane().add(BorderLayout.NORTH, menu);
+        window.getContentPane().add(BorderLayout.NORTH, menu); //Se pone el menu en el borde superior de la pantalla
 
-        background = new ImageIcon(getClass().getResource("gif.gif"));
+        /* Creacion del background con la imagen */
+        background = new ImageIcon(BattleShipUI.class.getResource("/gif.gif"));
         label1 = new JLabel(" ", background, SwingConstants.CENTER);
         label1.setSize(1200, 676);
-        label1.setLocation(new Point(1,1));
+        label1.setLocation(new Point(1,1)); //Se posiciona de primero, o atrás
 
-        text = new ImageIcon(getClass(),getResource("text.png"));
+        /* Creación del texto battleship con la imagen */
+        text = new ImageIcon(BattleShipUI.class.getResource("/text.png"));
         label2 = new JLabel(" ", text, SwingConstants.CENTER);
         label2.setSize(1200, 676);
-        label2.setLocation(new Point(1,2));
+        label2.setLocation(new Point(1,2)); //Se posiciona frente al background
 
-        window.add(label1);
+        //Se añaden las imagenes a la ventana principal
         window.add(label2);
+        window.add(label1);
 
+        /* Test de si existe el directorio, si el directorio existe y no es un archivo entonces se sigue normal */
         File test = new File(path);
         if (test.exists() && test.isDirectory()) {
 
-        } else {
+        } else { //Sino, se muestra un popup diciendo que no se encontró el directorio y que se restablecerá al directorio predeterminado
             JOptionPane.showMessageDialog(window, "No se encontró el directorio!\n Se restablecerá el directorio a predeterminado");
             path = null;
         }
 
-        window.setVisible(true);
+        window.setVisible(true); //Se hace visible la ventana principal
         
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == us) {
+        if (e.getSource() == us) { //Si se selecciona la pestaña "sobre nosotros" se muestra la siguiente información
             JOptionPane.showMessageDialog(window, "Sink-a-Ship \n Hecho por: Yurgen Cambronero 2022128005");
 
-        } else if (e.getSource() == savep) {
+        } else if (e.getSource() == savep) { //Si se selecciona la pestaña ruta guardado, se abre un filechooser y se selecciona un folder donde se guardaran los savefiles.json
             JFileChooser directoryChooser = new JFileChooser(path);
-            directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            directoryChooser.setDialogTitle("Seleccione donde desea guardar el archivo");
+            directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); //Se activa el modo solo directorios
+            directoryChooser.setDialogTitle("Seleccione donde desea guardar el archivo"); //Se le pone un titulo a la ventana FileChooser
             int response = directoryChooser.showSaveDialog(this);
 
             if (response == JFileChooser.APPROVE_OPTION){
@@ -139,15 +145,16 @@ public class BattleShipUI extends JFrame implements ActionListener{
             if (result != JFileChooser.CANCEL_OPTION) {
                 File fileName = fileChooser.getSelectedFile();
                 if ((fileName == null) || (fileName.getName().equals(""))) {
-                    path = null;
+                    nopath = 0;
                 } else {
                     path = fileChooser.getSelectedFile().getAbsolutePath();
+                    nopath = 0;
                 }
             } else {
                 JOptionPane.showMessageDialog(this ,"Se canceló la carga!");
-                path = null;
+                nopath = 1;
             }
-            if (path != null) {
+            if (nopath != 1) {
                 gameLoad = saver.loadBoard(path);
                 if (gameLoad == null) {
                     JOptionPane.showMessageDialog(this, "El archivo cargado no es permitido!");
@@ -158,15 +165,14 @@ public class BattleShipUI extends JFrame implements ActionListener{
 
             }
         } else if (e.getSource() == neu) {
-            gameStart = new BattleShipPlay(this, true, field, path);
-            field = new BattleField();
-        } else if (e.getSource() == salir) {
+            if (path == null) {
+                JOptionPane.showMessageDialog(this, "Selecciona primero una ruta de guardado!");
+            } else {
+                gameStart = new BattleShipPlay(this, true, field, path);
+                field = new BattleField();
+            }
+        } else if (e.getSource() == exit) {
             System.exit(0);
         }
-    }
-
-    public static void main (String[] args) {
-        BattleField battlef = new BattleField();
-        BattleShipUI ui = new BattleShipUI(battlef, "hehe");
     }
 }

@@ -54,7 +54,7 @@ public class BattleShipPlay extends JDialog implements ActionListener{
         /* Se crea espacio de texto, la miniconsola */
         text = new JTextField();
         text.setBounds(5, 450, 300, 100); //Tamaño
-        text.setText("Bienvenido!"); //Texto inicial
+        text.setText("Iniciando juego!"); //Texto inicial
         Font font = new FontUIResource("Serif", 1, 16); //Fuente del texto
         text.setFont(font); //Se aplica la fuente
         text.setEditable(false); //Se impide la edición (para que no se pueda escribir nada)
