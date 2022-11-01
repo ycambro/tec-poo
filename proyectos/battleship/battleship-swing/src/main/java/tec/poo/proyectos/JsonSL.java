@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.UUID;
 
 
-public class Saver {
-    BattleField loadBoard;
+public class JsonSL {
+    BattleField loadField;
     
     public void saveObject(BattleField board, String path){
         Gson gsonToSave = new Gson();
@@ -23,36 +23,36 @@ public class Saver {
         UUID id = UUID.randomUUID();
         System.out.println(jsonString);
 
-        try(PrintWriter pw = new PrintWriter(new File(path + "\\" + id +".json"))){
-            pw.write(jsonString);
+        try(PrintWriter printerWriter = new PrintWriter(new File(path + "\\" + id +".json"))){
+            printerWriter.write(jsonString);
         } catch(FileNotFoundException ex){
-            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE,null,ex);
+            Logger.getLogger(JsonSL.class.getName()).log(Level.SEVERE,null,ex);
         }
     }
 
-    public BattleField loadBoard(String archivo){
+    public BattleField loadField(String path){
         String json = "";
         try{
-            BufferedReader buffread = new BufferedReader(new FileReader(archivo));
+            BufferedReader buffread = new BufferedReader(new FileReader(path));
             String linea;
             try{
                 while((linea = buffread.readLine()) != null){
                     json += linea;
                 }
             } catch(IOException ex){
-                Logger.getLogger(Saver.class.getName()).log(Level.SEVERE,null,ex);
+                Logger.getLogger(JsonSL.class.getName()).log(Level.SEVERE,null,ex);
             }
         } catch(FileNotFoundException ex){
-            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JsonSL.class.getName()).log(Level.SEVERE, null, ex);
         }
         Gson gson = new Gson();
         try {
-            loadBoard = gson.fromJson(json,BattleField.class);
+            loadField = gson.fromJson(json,BattleField.class);
         } catch (IllegalStateException ex) {
             JOptionPane.showMessageDialog(null, "Este archivo no es permitido!");
         } catch (JsonSyntaxException ex) {
             JOptionPane.showMessageDialog(null, "Este archivo no es permitido!");
         }
-        return loadBoard;
+        return loadField;
     }
 }

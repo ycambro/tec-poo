@@ -1,13 +1,11 @@
 package tec.poo.proyectos;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.ImageIcon;
 
@@ -29,7 +27,7 @@ public class BattleShipUI extends JFrame implements ActionListener{
     ImageIcon text;
     JLabel label1;
     JLabel label2;
-    Saver saver;
+    JsonSL saver;
     String path;
     BattleField gameLoad;
     BattleShipPlay gameStart;
@@ -42,7 +40,7 @@ public class BattleShipUI extends JFrame implements ActionListener{
         field = battle;
 
         /* Crea el saver, objeto para guardar y cargar JSON files */
-        saver = new Saver();
+        saver = new JsonSL();
 
         /* Se crea la ventana principal */
         window = new JFrame("Sink a Ship");
@@ -124,54 +122,55 @@ public class BattleShipUI extends JFrame implements ActionListener{
             JFileChooser directoryChooser = new JFileChooser(path);
             directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); //Se activa el modo solo directorios
             directoryChooser.setDialogTitle("Seleccione donde desea guardar el archivo"); //Se le pone un titulo a la ventana FileChooser
-            int response = directoryChooser.showSaveDialog(this);
+            int response = directoryChooser.showSaveDialog(this); //Se almacena la respuesta dada en el seleccionador de archivos
 
-            if (response == JFileChooser.APPROVE_OPTION){
+            if (response == JFileChooser.APPROVE_OPTION){ //Si se dio aceptar entonces el path se guarda
                 path = directoryChooser.getSelectedFile().toString();
-            } else if (response == JFileChooser.CANCEL_OPTION) {
+            } else if (response == JFileChooser.CANCEL_OPTION) { //Sino, se da el mensaje de que se canceló la función
                   JOptionPane.showMessageDialog(this ,"Se canceló la selección de la ruta guardado!");
-            } else {
+            } else { //Y en cualquier otro caso fue que sucedió un error
                 JOptionPane.showMessageDialog(this ,"Error al cambiar la ruta de guardado!");
             }
-        } else if (e.getSource() == rules) {
+        } else if (e.getSource() == rules) { //Si se selecciona el menu reglas, pues se muestran
             JOptionPane.showMessageDialog(window, " El juego trata de una cuadrícula con barcos escondidos en el océano\n Su deber es tratar de adivinar donde se encuentran los barcos!\n Si el barco se encuentra en la posición clickeada su color cambiará a azul, en caso contrario su color será rojo\n Al encontrar todos los barcos ganarás, muchos éxitos!");
             
-        } else if (e.getSource() == load) {
+        } else if (e.getSource() == load) { //Si se da cargar, se crea un filechooser que permita json files principalmente
             JFileChooser fileChooser = new JFileChooser(path);
-            fileChooser.setFileFilter(new FileNameExtensionFilter("JSON Files", "json"));
-            int result = fileChooser.showOpenDialog(this);
-            fileChooser.setDialogTitle("Seleccione un archivo de guardado");
+            fileChooser.setFileFilter(new FileNameExtensionFilter("JSON Files", "json")); //Se crea el filtro para json files
+            int result = fileChooser.showOpenDialog(this); //Se guarda el resultado
+            fileChooser.setDialogTitle("Seleccione un archivo de guardado"); //Se abre el filechooser
 
-            if (result != JFileChooser.CANCEL_OPTION) {
-                File fileName = fileChooser.getSelectedFile();
-                if ((fileName == null) || (fileName.getName().equals(""))) {
-                    nopath = 0;
-                } else {
+            if (result != JFileChooser.CANCEL_OPTION) { //Si se da aceptar
+                File fileName = fileChooser.getSelectedFile(); //Se recibe el archivo
+                if ((fileName == null) || (fileName.getName().equals(""))) { //Se verifica que no este vacio
+                    JOptionPane.showMessageDialog(this ,"El archivo cargado estaba vacio!");
+                    nopath = 1; //Si es asi se envia una señal de no seguir
+                } else { //Sino, se guarda el path y se da una señal de continuar
                     path = fileChooser.getSelectedFile().getAbsolutePath();
                     nopath = 0;
                 }
-            } else {
+            } else { //En caso de que se haya cancelado, pues se indica
                 JOptionPane.showMessageDialog(this ,"Se canceló la carga!");
                 nopath = 1;
             }
-            if (nopath != 1) {
-                gameLoad = saver.loadBoard(path);
-                if (gameLoad == null) {
+            if (nopath != 1) { //Si la señal recibida es de continuar (0) entonces, se almacena el guardado
+                gameLoad = saver.loadField(path);
+                if (gameLoad == null) { //Si esta vacio, pues no se carga
                     JOptionPane.showMessageDialog(this, "El archivo cargado no es permitido!");
                 } else {
-                    gameLoaded = new BattleShipPlay(this, true, gameLoad, path);
+                    gameLoaded = new BattleShipPlay(this, true, gameLoad, path); //Sino, lo carga desde donde quedó
                 }
             } else {
-
+                //Si la señal recibida es de no continuar no se hace nada
             }
-        } else if (e.getSource() == neu) {
-            if (path == null) {
-                JOptionPane.showMessageDialog(this, "Selecciona primero una ruta de guardado! /r");
-            } else {
+        } else if (e.getSource() == neu) { //Si la opcion es nuevo
+            if (path == null) { //Si el path es null, pues se indica que se debe seleccionar una ruta de guardado
+                JOptionPane.showMessageDialog(this, "Selecciona primero una ruta de guardado!");
+            } else { //Sino, se crea la ventana desde 0
                 gameStart = new BattleShipPlay(this, true, field, path);
-                field = new BattleField();
+                field = new BattleField(); //Si se cierra la ventana se reinicia el campo
             }
-        } else if (e.getSource() == exit) {
+        } else if (e.getSource() == exit) { //Si se desea salir, pues se sale y ya
             System.exit(0);
         }
     }

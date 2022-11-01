@@ -19,7 +19,7 @@ public class BattleShipPlay extends JDialog implements ActionListener{
     int y;
     private int ships_alive;
     int attemps;
-    Saver saver;
+    JsonSL saver;
     String path;
     int x1;
     int y1;
@@ -35,7 +35,7 @@ public class BattleShipPlay extends JDialog implements ActionListener{
             JOptionPane.showMessageDialog(this, "El archivo cargado no es permitido!");
         }
 
-        saver = new Saver(); //Se crea un objeto capaz de cargar y guardar json files
+        saver = new JsonSL(); //Se crea un objeto capaz de cargar y guardar json files
 
         /* Creación de la ventana secundaria */
         dialog = new JDialog(father, modal); //Se crea y se asigna su padre
