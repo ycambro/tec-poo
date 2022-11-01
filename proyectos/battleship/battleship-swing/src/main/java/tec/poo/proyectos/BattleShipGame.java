@@ -1,5 +1,5 @@
-package tec.poo.tareas;
- 
+package tec.poo.proyectos;
+
 /*Bibliotecas */
 import java.util.Scanner;
 
@@ -10,9 +10,15 @@ public class BattleShipGame {
     public static int x;
     public static int y;
     public static int attemps;
+    static BattleShipUI battleUI;
 
     /* Creacion del main */
     public static void main(String[] args){
+        if (args[0].equals("-ui")) {
+            String path = args[2];
+            BattleField field = battleShip.getBattleField();
+            battleUI = new BattleShipUI(field, path);
+    } else  {
         while (battleShip.getShips() != 0){
             System.out.print("Enter a guess:   ");
             Scanner scanner = new Scanner(System.in); //Input
@@ -270,4 +276,4 @@ public class BattleShipGame {
         System.out.println("You have win! Your attemps were "+ attemps);
     }
 }
-
+}

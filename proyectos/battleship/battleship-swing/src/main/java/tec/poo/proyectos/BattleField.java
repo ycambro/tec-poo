@@ -1,4 +1,4 @@
-package tec.poo.tareas;
+package tec.poo.proyectos;
 
 public class BattleField{
     /* Declaración de variables */
