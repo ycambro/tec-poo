@@ -11,11 +11,16 @@ public class BattleShipGame {
     public static int y;
     public static int attemps;
     static BattleShipUI battleUI;
+    static String path;
 
     /* Creacion del main */
     public static void main(String[] args){
         if (args != null && args[0].equals("-ui")) {
-            String path = args[2];
+            try {
+                path = args[2];
+            } catch (Exception e) {
+                path = null;
+            }
             path.replace("/", "\\");
             path.concat("\\");
             BattleField field = battleShip.getBattleField();
