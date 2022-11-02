@@ -109,9 +109,14 @@ public class BattleShipUI extends JFrame implements ActionListener{
         window.add(label1);
 
         /* Test de si existe el directorio, si el directorio existe y no es un archivo entonces se sigue normal */
-        File test = new File(path);
-        if (test.exists() && test.isDirectory()) {
-        } else { //Sino, se muestra un popup diciendo que no se encontró el directorio y que se restablecerá al directorio predeterminado
+        try {
+            File test = new File(path);
+            if (test.exists() && test.isDirectory()) {
+            } else { //Sino, se muestra un popup diciendo que no se encontró el directorio y que se restablecerá al directorio predeterminado
+                JOptionPane.showMessageDialog(window, "No se encontró el directorio!\n Se restablecerá el directorio a predeterminado");
+                path = null;
+            }
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(window, "No se encontró el directorio!\n Se restablecerá el directorio a predeterminado");
             path = null;
         }
