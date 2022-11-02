@@ -123,7 +123,7 @@ public class BattleShipUI extends JFrame implements ActionListener{
 
         window.setVisible(true); //Se hace visible la ventana principal
 
-        /* Se inicializa el sonido de fondo */
+        /* Se inicializa el sonido de inicio */
         mymusic = new Music();
         backSound = mymusic.getSound("back.wav");
 		mymusic.playSound(backSound);

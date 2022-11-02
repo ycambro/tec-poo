@@ -118,9 +118,28 @@ public class BattleShipPlay extends JDialog implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         //Al precionarse algun botón se realiza una acción
         if (e.getSource() == save) { //Si se clickeo el botón de guardar
-            saver.saveObject(Battlefield, path); //Se guarda con el objeto correspondiente
-            JOptionPane.showMessageDialog(this, "El juego se ha guardado en:\n "+ path); //Y se muestra un dialogo que informe
-            dialog.dispose(); //Se cierra la ventana
+            if (path != null) {
+                saver.saveObject(Battlefield, path); //Se guarda con el objeto correspondiente
+                JOptionPane.showMessageDialog(this, "El juego se ha guardado en:\n "+ path); //Y se muestra un dialogo que informe
+                dialog.dispose(); //Se cierra la ventana
+            } else {
+                JFileChooser directoryChooser = new JFileChooser(path);
+                directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); //Se activa el modo solo directorios
+                directoryChooser.setDialogTitle("Seleccione donde desea guardar el archivo"); //Se le pone un titulo a la ventana FileChooser
+                int response = directoryChooser.showSaveDialog(this); //Se almacena la respuesta dada en el seleccionador de archivos
+    
+                if (response == JFileChooser.APPROVE_OPTION){ //Si se dio aceptar entonces el path se guarda
+                    JOptionPane.showMessageDialog(this ,"No se encontró una ruta de guardado!\n Selecciona una para guardar el archivo");
+                    path = directoryChooser.getSelectedFile().toString();
+                    saver.saveObject(Battlefield, path); //Se guarda con el objeto correspondiente
+                    JOptionPane.showMessageDialog(this, "El juego se ha guardado en:\n "+ path); //Y se muestra un dialogo que informe
+                    dialog.dispose(); //Se cierra la ventana
+                } else if (response == JFileChooser.CANCEL_OPTION) { //Sino, se da el mensaje de que se canceló la función
+                      JOptionPane.showMessageDialog(this ,"Se canceló el guardado!");
+                } else { //Y en cualquier otro caso fue que sucedió un error
+                    JOptionPane.showMessageDialog(this ,"Error al guardar el archivo!");
+                }
+            }
 
         }
         //Si se presiona algun botón de la cuadrícula
