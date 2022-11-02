@@ -1,5 +1,6 @@
 package tec.poo.proyectos;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -34,6 +35,9 @@ public class BattleShipUI extends JFrame implements ActionListener{
     BattleShipPlay gameStart;
     BattleShipPlay gameLoaded;
     int nopath;
+    Image myIcon;
+    Music mymusic;
+    Clip backSound;
 
     public BattleShipUI (BattleField battle, String pathO) {
         /* Guarda las variables recibidas como variables globales*/
@@ -91,6 +95,9 @@ public class BattleShipUI extends JFrame implements ActionListener{
         label1.setSize(1200, 676);
         label1.setLocation(new Point(1,1)); //Se posiciona de primero, o atrás
 
+        myIcon = Toolkit.getDefaultToolkit().getImage(BattleShipUI.class.getResource("/logo.png"));
+        window.setIconImage(myIcon);
+
         /* Creación del texto battleship con la imagen */
         text = new ImageIcon(BattleShipUI.class.getResource("/text.png"));
         label2 = new JLabel(" ", text, SwingConstants.CENTER);
@@ -111,6 +118,11 @@ public class BattleShipUI extends JFrame implements ActionListener{
         }
 
         window.setVisible(true); //Se hace visible la ventana principal
+
+        /* Se inicializa el sonido de fondo */
+        mymusic = new Music();
+        backSound = mymusic.getSound("back.wav");
+		mymusic.playSound(backSound);
         
     }
 

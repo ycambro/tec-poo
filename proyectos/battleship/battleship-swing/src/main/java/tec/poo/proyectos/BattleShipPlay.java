@@ -1,5 +1,6 @@
 package tec.poo.proyectos;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 
@@ -23,6 +24,11 @@ public class BattleShipPlay extends JDialog implements ActionListener{
     String path;
     int x1;
     int y1;
+    Image myIcon;
+    Clip victory;
+    Clip boom;
+    Music boomMusic;
+    Music victoryMusic;
 
     public BattleShipPlay(BattleShipUI father, boolean modal, BattleField board1, String pathO) {
         path = pathO; //Se guarda el path para usarse luego
@@ -38,11 +44,20 @@ public class BattleShipPlay extends JDialog implements ActionListener{
         saver = new JsonSL(); //Se crea un objeto capaz de cargar y guardar json files
 
         /* Creación de la ventana secundaria */
+        victoryMusic = new Music();
+        victory = victoryMusic.getSound("victory.wav");
+
+        boomMusic = new Music();
+        boom = boomMusic.getSound("boom.wav");
+
         dialog = new JDialog(father, modal); //Se crea y se asigna su padre
         dialog.setSize(600, 600); //Se le da un tamaño
         dialog.setLayout(null); //Se limpia para no tener problemas de distribución
         dialog.setLocationRelativeTo(null); //Se centra
         dialog.getContentPane().setBackground(Color.CYAN); //Se le pone color Cyan al fondo
+
+        myIcon = Toolkit.getDefaultToolkit().getImage(BattleShipUI.class.getResource("/logo.png"));
+        dialog.setIconImage(myIcon);
 
         /* Creación del botón para guardar */
         save = new JButton("Guardar Juego");
@@ -111,6 +126,7 @@ public class BattleShipPlay extends JDialog implements ActionListener{
         //Si se presiona algun botón de la cuadrícula
         for (int i = 0; i < 49; i ++){
             if (e.getSource() == buttons[i]) {
+                boomMusic.playSound(boom);
                 //Se traduce el input dependiendo del botón
                 if (i == 0){ 
                     x = 0;
@@ -348,6 +364,7 @@ public class BattleShipPlay extends JDialog implements ActionListener{
                 }
                 Battlefield.setAttemps(); //Se añade 1 a intentos
                 if (Battlefield.getShipsAlive() == 0){ //Si se derribaron todos los barcos, se imprime la ventana en un popup y se cierra luego la ventana
+                    victoryMusic.playSound(victory);
                     JOptionPane.showMessageDialog(dialog, "Todos los barcos se han hundido!\n Has hecho "+ Battlefield.getAttemps() + " intentos");
                     dialog.dispose();
                 }
